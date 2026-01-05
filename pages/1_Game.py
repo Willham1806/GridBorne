@@ -6,6 +6,18 @@ if not st.session_state.get("setup_complete", False):
     st.warning("You must complete setup first.")
     st.stop()
 
+# ---------- Start-of-turn resource income ----------
+if "last_income_turn" not in st.session_state:
+    st.session_state.last_income_turn = 0
+
+if st.session_state.last_income_turn < st.session_state.turn:
+    if st.session_state.active_player == "p1":
+        st.session_state.p1_resource += 3
+    else:
+        st.session_state.p2_resource += 3
+
+    st.session_state.last_income_turn = st.session_state.turn
+
 # ---------- Turn owner ----------
 active_player = st.session_state.active_player
 active_name = st.session_state.p1_name if active_player == "p1" else st.session_state.p2_name
